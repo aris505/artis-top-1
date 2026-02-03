@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StarGlow Gallery - Album Artis Terkenal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #333333 100%);
+            color: white;
+            overflow-x: hidden;
+            position: relative;
+        }
+        /* Partikel Cahaya */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #ff6b6b, transparent);
+            border-radius: 50%;
+            animation: float 10s infinite linear;
+        }
+        .particle:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { top: 20%; left: 20%; animation-delay: 1s; }
+        .particle:nth-child(3) { top: 30%; left: 30%; animation-delay: 2s; }
+        .particle:nth-child(4) { top: 40%; left: 40%; animation-delay: 3s; }
+        .particle:nth-child(5) { top: 50%; left: 50%; animation-delay: 4s; }
+        .particle:nth-child(6) { top: 60%; left: 60%; animation-delay: 5s; }
+        .particle:nth-child(7) { top: 70%; left: 70%; animation-delay: 6s; }
+        .particle:nth-child(8) { top: 80%; left: 80%; animation-delay: 7s; }
+        .particle:nth-child(9) { top: 90%; left: 90%; animation-delay: 8s; }
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+        /* Animasi DJ: Equalizer bars */
+        .dj-equalizer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .bar {
+            position: absolute;
+            bottom: 0;
+            width: 10px;
+            background: linear-gradient(180deg, #ff6b6b, #4ecdc4, #45b7d1);
+            animation: bounce 1s infinite ease-in-out;
+        }
+        .bar:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .bar:nth-child(2) { left: 20%; animation-delay: 0.1s; }
+        .bar:nth-child(3) { left: 30%; animation-delay: 0.2s; }
+        .bar:nth-child(4) { left: 40%; animation-delay: 0.3s; }
+        .bar:nth-child(5) { left: 50%; animation-delay: 0.4s; }
+        .bar:nth-child(6) { left: 60%; animation-delay: 0.5s; }
+        .bar:nth-child(7) { left: 70%; animation-delay: 0.6s; }
+        .bar:nth-child(8) { left: 80%; animation-delay: 0.7s; }
+        .bar:nth-child(9) { left: 90%; animation-delay: 0.8s; }
+        @keyframes bounce {
+            0%, 100% { height: 20px; }
+            50% { height: 100px; }
+        }
+        header {
+            text-align: center;
+            padding: 50px 20px;
+            background: rgba(0, 0, 0, 0.8);
+            animation: colorChange 3s infinite;
+            position: relative;
+            z-index: 1;
+        }
+        @keyframes colorChange {
+            0% { color: #ff6b6b; }
+            25% { color: #4ecdc4; }
+            50% { color: #45b7d1; }
+            75% { color: #f9ca24; }
+            100% { color: #ff6b6b; }
+        }
+        h1 {
+            font-size: 3em;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .album {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .photo {
+            margin: 20px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease;
+            background: rgba(0,0,0,0.7);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 107, 107, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0); }
+        }
+        .photo:hover {
+            transform: scale(1.05);
+        }
+        .photo img {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            transition: opacity 0.3s ease;
+        }
+        .photo:hover img {
+            opacity: 0.8;
+        }
+        .photo-info {
+            padding: 10px;
+            text-align: center;
+        }
+        .photo-info h3 {
+            margin: 0;
+            font-size: 1.5em;
+            color: #4ecdc4;
+            animation: textGlow 2s infinite alternate;
+        }
+        @keyframes textGlow {
+            from { text-shadow: 0 0 5px #4ecdc4; }
+            to { text-shadow: 0 0 15px #45b7d1; }
+        }
+        .photo-info p {
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+        .stats {
+            text-align: center;
+            padding: 50px 20px;
+            background: rgba(0, 0, 0, 0.8);
+            position: relative;
+            z-index: 1;
+        }
+        .leaderboard {
+            list-style: none;
+            padding: 0;
+            margin: 0 auto;
+            max-width: 600px;
+        }
+        .leaderboard li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin: 10px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            transition: transform 0.2s ease;
+        }
+        .leaderboard li:hover {
+            transform: scale(1.02);
+        }
+        .leaderboard .rank {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #f9ca24;
+            margin-right: 10px;
+        }
+        .leaderboard .name {
+            flex: 1;
+            font-size: 1.2em;
+            color: #4ecdc4;
+        }
+        .leaderboard .votes {
+            font-size: 1.1em;
+            color: #ff6b6b;
+            margin-right: 10px;
+        }
+        .leaderboard button {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background 0.3s ease;
+        }
+        .leaderboard button:hover {
+            background: linear-gradient(45deg, #4ecdc4, #ff6b6b);
+        }
+        .contact-dev {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+            background: rgba(0, 0, 0, 0.8);
+            position: relative;
+            z-index: 1;
+        }
+        .dev-profile {
+            margin-bottom: 20px;
+        }
+        .dev-profile img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid #4ecdc4;
+            animation: rotate 10s infinite linear;
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .dev-info {
+            text-align: center;
+        }
+        .dev-info h2 {
+            margin: 0;
+            color: #4ecdc4;
+        }
+        .dev-info p {
+            margin: 10px 0;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0,0,0,0.9);
+            font-size: 0.8em;
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Partikel Cahaya -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Animasi DJ Background -->
+    <div class="dj-equalizer">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+
+    <header>
+        <h1>StarGlow Gallery</h1>
+        <p>Album Artis Ternama</p>
+    </header>
+
+    <section class="album">
+        <div class="photo">
+            <!-- Ganti link di bawah ini dengan URL gambar artis 1 -->
+            <img src="https://l.top4top.io/p_3686r4v5x9.jpg" alt="Artis 1">
+            <div class="photo-info">
+                <h3>Radit</h3>
+                <p>Seorang artis yang sangat terkenal dan di gemari player sakura school simulator, beliau adalah top 1 gammer di india, dan top 3 artis tertamvan di india, beliau terkenal karena ke hobby an nya salto di depan ciwi-ciwi india, beliau juga merupakan keturunan asli india, dan dia terkenal karena menikahi artis yaitu jumini.</p>
+            </div>
+        </div>
+        <div class="photo">
+            <!-- Ganti link di bawah ini dengan URL gambar artis 2 -->
+            <img src="https://l.top4top.io/p_3686h4nxt9.jpg" alt="Artis 2">
+            <div class="photo-info">
+                <h3>Irwandi</h3>
+                <p>Seorang artis Bangladesh top 1, beliau juga pernah meraih mendali emas dan memenangkan lomba menghias sound horeg, beliau juga merupakan penggemar para ciwi-ciwi india dan bangladesh, Irwandi adalah sosok artis yang terlahir dari sound horeg, beliau juga memiliki tiga istri yaitu jumeha di karuniakan 4 anak, jumeha di karuniakan 1 anak, dan jule di karuniakan 1 anak bukan hanya itu irwandi adalah sosok peria tamvan se Bangladesh sehingga presiden Bangladesh memberikan pengawalan ketat saat bertemu artis radit bintang 3.</p>
+            </div>
+        </div>
+        <div class="photo">
+            <!-- Ganti link di bawah ini dengan URL gambar artis 3 -->
+            <img src="https://k.top4top.io/p_3686605yz8.jpg" alt="Artis 3">
+            <div class="photo-info">
+                <h3>Gunawan (gundul tapi menawan)</h3>
+                <p>Seorang atlet salto top 1 di dunia gunawan juga berperan dalam berbagai bidang contohnya adalah bidang pemikat yaitu bidang penarik para ciwi-ciwi sehingga membuat ciwi-ciwi kagum melihat ke tamvanannya, beliau juga merupakan artis india selatan, beliau juga merupakan saingannya radit, dan beliau juga pernah di undang beberapa kali ke panggung besar sekumpulan artis-artis, beliau juga sedang menjalani rumah tangga yang harmonis bersama sang istri julita.</p>
+            </div>
+        </div>
+        <div class="photo">
+            <!-- Ganti link di bawah ini dengan URL gambar artis 4 -->
+            <img src="https://j.top4top.io/p_3686z59sd7.jpg" alt="Artis 4">
+            <div class="photo-info">
+                <h3>Alfaren</h3>
+                <p>Seorang artis bangladesh top 2 yang merupakan saingan antara dua artis yaitu irwandi, beliau juga top global 1 player ml, dan di sukai oleh warga india dan Bangladesh, beliau juga pernah di undang ke kediamannya artis irwandi, dan beliau juga memiliki istri yaitu JIj@h yang sangat di sayangi.</p>
+            </div>
+        </div>
+        <div class="photo">
+            <!-- Ganti link di bawah ini dengan URL gambar artis 5 -->
+            <img src="https://i.top4top.io/p_36867jn419.jpg" alt="Artis 5">
+            <div class="photo-info">
+                <h3>Cuplikan potret artis alfaren</h3>
+                <p>Cuplikan foto artis alfaren sedang membahas bersama CEO, beliau sedang membangun kerjasama antara ceo perusahaan wangzhu, dan collaboration artis Bangladesh X ceo perusahaan China.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <h2>Leaderboard Voting Artis Terkenal</h2>
+        <ul class="leaderboard" id="leaderboard"></ul>
+    </section>
+
+    <section class="contact-dev">
+        <div class="dev-profile">
+            <!-- Ganti link di bawah ini dengan URL foto profil developer -->
+            <img src="https://h.top4top.io/p_3686o245b8.jpg" alt="Foto Profil Developer">
+        </div>
+        <div class="dev-info">
+            <h2>🔰 Dev Aris 🕊</h2>
+            <p>Halo! Saya adalah seorang pengembang web ini, semoga anda menyukai artis-artis top dunia 🥰.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 StarGlow Gallery. Semua hak cipta dilindungi undang-undang. Konten ini hanya untuk tujuan hiburan dan edukasi. Tidak boleh digunakan untuk tujuan komersial tanpa izin.</p>
+    </footer>
+
+    <script>
+        // Leaderboard voting system with localStorage
+        let artists = [
+            { id: 1, name: 'Irwandi', votes: 900 },
+            { id: 2, name: 'Alfaren', votes: 800 },
+            { id: 3, name: 'Radit', votes: 700 },
+            { id: 4, name: 'Gunawan', votes: 500 },
+            { id: 5, name: 'rate web', votes: 1000 }
+        ];
+
+        function loadVotes() {
+            artists.forEach(artist => {
+                let storedVotes = localStorage.getItem(`votes_${artist.id}`);
+                if (storedVotes !== null) {
+                    artist.votes = parseInt(storedVotes);
+                }
+                // Tambah 2 setiap kali halaman dibuka
+                artist.votes += 2;
+                localStorage.setItem(`votes_${artist.id}`, artist.votes);
+            });
+            renderLeaderboard();
+        }
+
+        function renderLeaderboard() {
+            // Sort berdasarkan votes descending
+            artists.sort((a, b) => b.votes - a.votes);
+            const leaderboard = document.getElementById('leaderboard');
+            leaderboard.innerHTML = '';
+            artists.forEach((artist, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span class="rank">#${index + 1}</span>
+                    <span class="name">${artist.name}</span>
+                    <span class="votes">${artist.votes} Votes</span>
+                    <button onclick="vote(${artist.id})">Vote</button>
+                `;
+                leaderboard.appendChild(li);
+            });
+        }
+
+        function vote(id) {
+            const artist = artists.find(a => a.id === id);
+            if (artist) {
+                artist.votes += 1;
+                localStorage.setItem(`votes_${id}`, artist.votes);
+                renderLeaderboard();
+            }
+        }
+
+        // Load votes saat halaman load
+        window.addEventListener('load', loadVotes);
+    </script>
+</body>
+  </html>
